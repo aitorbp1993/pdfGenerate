@@ -1,8 +1,8 @@
 package com.example.generator.service;
 
-import com.example.generator.dto.EmailRequest;
 import com.example.generator.error.CustomException;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PdfService {
-    void generateAndSendPdf(EmailRequest emailRequest) throws CustomException, Exception;
+    byte[] generatePdf(MultipartFile image) throws CustomException, Exception;
 }
