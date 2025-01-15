@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import jakarta.validation.Valid; 
+import jakarta.validation.Valid;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmailWithAttachment(@Valid EmailRequest emailRequest, byte[] pdfBytes) throws CustomException, Exception {
+    public void sendEmailWithAttachment(@Valid EmailRequest emailRequest, byte[] pdfBytes) throws CustomException {
         validateEmailRequest(emailRequest);
 
         try {
@@ -39,6 +39,8 @@ public class EmailServiceImpl implements EmailService {
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             throw new CustomException("Error al enviar el correo: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new CustomException("Error inesperado al enviar el correo", e);
         }
     }
 

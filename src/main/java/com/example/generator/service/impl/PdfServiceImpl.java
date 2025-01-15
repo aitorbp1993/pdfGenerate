@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 public class PdfServiceImpl implements PdfService {
 
     @Override
-    public byte[] generatePdf(MultipartFile image) throws CustomException, Exception {
+    public byte[] generatePdf(MultipartFile image) throws CustomException {
         validateImageFile(image);
 
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
@@ -32,6 +32,8 @@ public class PdfServiceImpl implements PdfService {
             document.close();
 
             return out.toByteArray();
+        } catch (Exception e) {
+            throw new CustomException("Error al generar el PDF", e);
         }
     }
 
@@ -39,5 +41,6 @@ public class PdfServiceImpl implements PdfService {
         if (image.isEmpty() || (!image.getContentType().equals("image/png") && !image.getContentType().equals("image/jpeg"))) {
             throw new CustomException("El archivo debe ser una imagen en formato PNG o JPEG.");
         }
+      
     }
 }
